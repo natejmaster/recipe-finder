@@ -1,15 +1,24 @@
-// create function to get the data from the spoonacular API
 
-function getRecipe() {
+// create click event for ingredient search button
+$("#submit-ingredient").on("click", function (event) {
+    event.preventDefault();
+    // get value from ingredient input
+    var ingredientInput = $("#ingredientInput").val().trim();
+    // clear ingredient input
+    $("#ingredientInput").val("");
+    // call function to get recipe data
+    getRecipe(ingredientInput);
+});
+
+
+// create function to get the data from the spoonacular API
+function getRecipe(ingredientInput) {
     apiKey = "299e8395c7b0429eb4fe0d1816358c93"
-    var indgrediantInpupt = document.getElementById("indgrediantInput").value;
-    var url = "https://api.spoonacular.com/recipes/findByIngredients?=$" + indgrediantInpupt "&number=5&apiKey=" + apiKey;
-    fetch(url)  //fetching the data from the api
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-        })
+    var queryURL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientInput + "&number=5&apiKey=" + apiKey;
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+    }).then(function (response) {
+        console.log(response);
+    });
 }
-          
