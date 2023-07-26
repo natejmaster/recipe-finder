@@ -1,4 +1,6 @@
-
+$(function () {
+    let ingredientSearchInput = $('#ingredientInput');
+    let apiKey = "299e8395c7b0429eb4fe0d1816358c93";
 // create click event for ingredient search button
 $("#submit-ingredient").on("click", function (event) {
     event.preventDefault();
@@ -36,7 +38,6 @@ function createCard() {
 
 // create function to get the data from the spoonacular API
 function getRecipe(ingredientInput) {
-    apiKey = "299e8395c7b0429eb4fe0d1816358c93"
     var queryURL = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredientInput + "&number=5&apiKey=" + apiKey;
     $.ajax({
         url: queryURL,
@@ -50,10 +51,11 @@ function getRecipe(ingredientInput) {
 
 
 var fetchButton = document.getElementById('fetch-button');
-var apiKey = '299e8395c7b0429eb4fe0d1816358c93'
+
 function getApi() {
  
-  var requestUrl = 'https://api.spoonacular.com/recipes/autocomplete?' +apiKey;
+  var requestUrl = 'https://api.spoonacular.com/recipes/autocomplete?' + apiKey;
+
 
   fetch(requestUrl)
     .then(function (response) {
@@ -64,10 +66,5 @@ function getApi() {
     })}
 
 fetchButton.addEventListener('click', getApi);
-
-
-
-
-
-
+});
 
