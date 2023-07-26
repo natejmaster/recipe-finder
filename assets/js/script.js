@@ -22,3 +22,29 @@ function getRecipe(ingredientInput) {
         console.log(response);
     });
 }
+
+
+
+
+var fetchButton = document.getElementById('fetch-button');
+var apiKey = '299e8395c7b0429eb4fe0d1816358c93'
+function getApi() {
+ 
+  var requestUrl = 'https://api.spoonacular.com/recipes/autocomplete?' +apiKey;
+
+  fetch(requestUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+     console.log(response)
+    })}
+
+fetchButton.addEventListener('click', getApi);
+
+
+
+
+
+
+
