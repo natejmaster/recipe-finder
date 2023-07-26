@@ -28,9 +28,11 @@ function getRecipe(ingredientInput) {
 
 
 var fetchButton = document.getElementById('fetch-button');
+
 function getApi() {
  
   var requestUrl = 'https://api.spoonacular.com/recipes/autocomplete?' + apiKey;
+
 
   fetch(requestUrl)
     .then(function (response) {
@@ -42,3 +44,4 @@ function getApi() {
 
 fetchButton.addEventListener('click', getApi);
 });
+
