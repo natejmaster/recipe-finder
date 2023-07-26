@@ -10,6 +10,8 @@ $("#submit-ingredient").on("click", function (event) {
     $("#ingredientInput").val("");
     // call function to get recipe data
     getRecipe(ingredientInput);
+    // call function to create card
+    createCard();
 });
 
 // create card for each recipe
