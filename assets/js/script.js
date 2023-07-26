@@ -10,6 +10,29 @@ $("#submit-ingredient").on("click", function (event) {
     getRecipe(ingredientInput);
 });
 
+// create card for each recipe
+function createCard() {
+    // create card
+    var card = $("<div>").addClass("card");
+    // create card body
+    var cardBody = $("<div>").addClass("card-body");
+    // create card title
+    var cardTitle = $("<h5>").addClass("card-title");
+    // create card text
+    var cardText = $("<p>").addClass("card-text");
+    // create card image
+    var cardImage = $("<img>").addClass("card-img-top");
+    // append card title to card body
+    cardBody.append(cardTitle);
+    // append card text to card body
+    cardBody.append(cardText);
+    // append card image to card body
+    cardBody.append(cardImage);
+    // append card body to card
+    card.append(cardBody);
+    // append card to recipe container
+    $("#recipe-container").append(card);
+}
 
 // create function to get the data from the spoonacular API
 function getRecipe(ingredientInput) {
