@@ -18,17 +18,18 @@
     <main>
         <div id="user-input-card">
             <h3>Enter your ingredients in the input below:</h3>
-            <input id="ingredientInput" />
-            <button id="submit-ingredient">Submit Ingredient</button>
+            <input type="text" id="ingredientInput" placeholder="Enter ingredient">
+            <button id="add-ingredient">Add Ingredient</button>
+            <button id="submit-ingredients">Search Recipes</button>
             <div id="current ingredients">
                 <p>Current Ingredients:</p>
                 <ul id="current-ingredient-list"></ul>
+                <a href="#" id="clear-ingredients">Clear Ingredients</a>
             </div>
         </div>
         <div id="recipe-container"></div>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="assets/js/script.js"></script>
         <div id="player"></div>
+    </main>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
