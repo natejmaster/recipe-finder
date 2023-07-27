@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">    
+    <script src="https://cdn.tailwindcss.com"></script>   
 </head>
 <body>
     <header class = "bg-blue-500">
@@ -18,14 +18,14 @@
     </nav>
     <main>
         <div class = "flex justify-center m-4" id="user-input-card">
-            <h2>Enter your ingredients in the input below:</h2>
-            <input class = "w-1/10 px-4 py-2 m-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"classtype="text" id="ingredientInput" placeholder="Enter ingredient">
+            <h2 class = "text-lg flex items-center text-blue-500">Enter your ingredients in the input below:</h2>
+            <input class = "text-blue-500 text-xl w-1/10 px-4 py-2 m-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"classtype="text" id="ingredientInput" placeholder="Enter ingredient">
             <button class = "bg-blue-500 hover:bg-blue-600 text-white font-semibold m-2 py-2 px-4 rounded" id="add-ingredient">Add Ingredient</button>
             <button class = "bg-blue-500 hover:bg-blue-600 text-white font-semibold m-2 py-2 px-4 rounded" id = "submit-ingredients">Search Recipes</button>
             <div id="current ingredients">
-                <p class = "text-lg">Current Ingredients:</p>
-                <ul id="current-ingredient-list"></ul>
-                <a href="#" id="clear-ingredients">Clear Ingredients</a>
+                <p class = "text-lg text-blue-500 underline">Current Ingredients:</p>
+                <ul class = "text-blue-500" id ="current-ingredient-list"></ul>
+                <a href="#" class="text-blue-500" id="clear-ingredients">Clear Ingredients</a>
             </div>
         </div>
         <div id="recipe-container"></div>
