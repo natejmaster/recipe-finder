@@ -1,12 +1,11 @@
 $(function () {
-    // global variables
     let ingredientSearchInput = $('#ingredientInput');
     let apiKey = "3c587e98147391cafa125f23b8ed7455";
     let appId = "efaf20c3"
 
     let previousIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
             ingredientSearchInput.val(previousIngredients.join(', '));
-        // function to render the ingredient list
+
             function renderIngredientList() {
                 let ingredientList = $("#current-ingredient-list");
                 ingredientList.empty();
@@ -16,43 +15,48 @@ $(function () {
                 }
             }
 
-            // Render the ingredient list on page load
-            renderIngredientList();
+  // This renders the ingredient list on page load (if anything is in there from the last use)
+  renderIngredientList();
 
-            // create click event for ingredient search button
-            $("#add-ingredient").on("click", function (event) {
-                event.preventDefault();
-                // get value from ingredient input
-                let ingredient = ingredientSearchInput.val().trim();
-                if (ingredient && !previousIngredients.includes(ingredient)) {
-                  previousIngredients.push(ingredient);
-                  localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
-                  ingredientSearchInput.val(previousIngredients.join(', '));
-                  ingredientSearchInput.val("");
-                  renderIngredientList();
-              } else {
-                if (!ingredient) {
-                  alert("Please enter an ingredient before adding.");
-              } else {
-                  alert("Ingredient already added. Please enter a different ingredient.");
-              }
-          }
-          });
+  // Click event for the add ingredient button
+  $("#add-ingredient").on("click", function (event) {
+    event.preventDefault();
+    // This ensures that the ingredient gets added to the list as long as it's not already on the list.
+    let ingredient = ingredientSearchInput.val().trim();
+    if (ingredient && !previousIngredients.includes(ingredient)) {
+      //It adds the ingredient to this list of previous ingredients and updates the previousIngredients variable in localStorage
+      previousIngredients.push(ingredient);
+      localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
+      ingredientSearchInput.val(previousIngredients.join(', '));
+      //The input is cleared for the next entry, and the render function is called to add the new input to the rendered list
+      ingredientSearchInput.val("");
+      renderIngredientList();
+    } 
+    //Find a way to do this without using an alert or get rid of it
+    //else {
+      //These are alerts if the input is blank or the ingredient is already on the list
+      //if (!ingredient) {
+        //alert("Please enter an ingredient before adding.");
+      //} else {
+        //alert("Ingredient already added. Please enter a different ingredient.");
+     // }
+    //}
+  });
 
-            // create click event for ingredient search button
-            $("#submit-ingredients").on("click", function (event) {
-                event.preventDefault();
-                // call function to get recipe data
-                getRecipes(previousIngredients);
-            });
+  // create click event for ingredient search button
+  $("#submit-ingredients").on("click", function (event) {
+    event.preventDefault();
+    // call function to get recipe data
+    getRecipes(previousIngredients);
+  });
 
-            $("#clear-ingredients").on("click", function (event) {
-              event.preventDefault();
-              // Clear ingredient list
-              previousIngredients = [];
-              localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
-              renderIngredientList();
-          });
+  $("#clear-ingredients").on("click", function (event) {
+    event.preventDefault();
+    // Clear ingredient list
+    previousIngredients = [];
+    localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
+    renderIngredientList();
+  });
 
             // create function to get the data from the Edamam API
             function getRecipes(ingredients) {
@@ -66,7 +70,7 @@ $(function () {
                     createCard(response.hits);
                 });
             }
-// function to create the recipe cards
+
             function createCard(data) {
                 let cardContainer = $("#recipe-container");
                 cardContainer.empty();
@@ -77,14 +81,11 @@ $(function () {
                         img: recipe.image,
                         url: recipe.url,
                     };
-                    // create card elements
                     let card = $("<div>").addClass("card");
                     let title = $("<h3>").text(cardData.title);
                     let url = $("<a>").attr("href", cardData.url).text("Click here for recipe");
                     let img = $("<img>").attr("src", cardData.img);
-                    // append card elements to card
                     card.append(title, img, url);
-// append card to card container
                     cardContainer.append(card);
                 }
             }
