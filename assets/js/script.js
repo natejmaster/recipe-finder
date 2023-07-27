@@ -1,11 +1,12 @@
 $(function () {
+    // global variables
     let ingredientSearchInput = $('#ingredientInput');
     let apiKey = "3c587e98147391cafa125f23b8ed7455";
     let appId = "efaf20c3"
 
     let previousIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
             ingredientSearchInput.val(previousIngredients.join(', '));
-
+        // function to render the ingredient list
             function renderIngredientList() {
                 let ingredientList = $("#current-ingredient-list");
                 ingredientList.empty();
@@ -65,7 +66,7 @@ $(function () {
                     createCard(response.hits);
                 });
             }
-
+// function to create the recipe cards
             function createCard(data) {
                 let cardContainer = $("#recipe-container");
                 cardContainer.empty();
@@ -76,11 +77,14 @@ $(function () {
                         img: recipe.image,
                         url: recipe.url,
                     };
+                    // create card elements
                     let card = $("<div>").addClass("card");
                     let title = $("<h3>").text(cardData.title);
                     let url = $("<a>").attr("href", cardData.url).text("Click here for recipe");
                     let img = $("<img>").attr("src", cardData.img);
+                    // append card elements to card
                     card.append(title, img, url);
+// append card to card container
                     cardContainer.append(card);
                 }
             }
