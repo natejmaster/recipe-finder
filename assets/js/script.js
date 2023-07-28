@@ -71,6 +71,7 @@ $(function () {
     });
   }
 
+
   function createCard(data) {
     let cardContainer = $("#recipe-container");
     cardContainer.empty();
@@ -81,9 +82,12 @@ $(function () {
         img: recipe.image,
         url: recipe.url,
       };
+          if (cardData.title.length > 40) {
+                        cardData.title = cardData.title.substring(0, 40) + "...";
+                    }
       let card = $("<div>").addClass("flex flex-col card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg").attr('id', `card-${i}`);
       let title = $("<h3>").addClass("text-blue-500 text-xl underline").text(cardData.title);
-      title.attr("data-title", cardData.title);
+      title.attr("data-title", recipe.label);
       let url = $("<a>").addClass("text-xl text-white text-center bg-blue-500 hover:bg-blue-600 rounded").attr("href", cardData.url).text("Click here for recipe");
       let img = $("<img>").addClass("py-2 flex justify-center").attr("src", cardData.img);
       let youtubeIframe = $("<iframe>").addClass("youtube-iframe").attr("allowfullscreen", "true");
@@ -112,6 +116,7 @@ $(function () {
     });
   };
 });
+
         //This code loads the IFrame Player API code asynchronously.
         //var tag = document.createElement('script');
 
