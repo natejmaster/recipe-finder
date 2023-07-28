@@ -33,14 +33,16 @@ $(function () {
       renderIngredientList();
     }
     //Find a way to do this without using an alert or get rid of it
-    //else {
+    else {
     //These are alerts if the input is blank or the ingredient is already on the list
-    //if (!ingredient) {
-    //alert("Please enter an ingredient before adding.");
-    //} else {
-    //alert("Ingredient already added. Please enter a different ingredient.");
-    // }
-    //}
+    if (!ingredient) {
+      my_modal_5.showModal();
+    };
+    if (previousIngredients.includes(ingredient)) {
+      my_modal_5.showModal();
+    }};
+    
+    
   });
 
   // create click event for ingredient search button
@@ -82,22 +84,22 @@ $(function () {
         img: recipe.image,
         url: recipe.url,
       };
-          if (cardData.title.length > 40) {
-                        cardData.title = cardData.title.substring(0, 40) + "...";
-                    }
-      let card = $("<div>").addClass("flex flex-col card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg").attr('id', `card-${i}`);
-      let title = $("<h3>").addClass("text-blue-500 text-xl underline").text(cardData.title);
+      let card = $("<div>").addClass("flex flex-col w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap").attr('id', `card-${i}`);
+      let title = $("<h3>").addClass("text-blue-500 w-full text-xl text-center underline").text(cardData.title.length  > 32 ? cardData.title.substring(0,32)  + '...'  : cardData.title);
       title.attr("data-title", recipe.label);
-      let url = $("<a>").addClass("text-xl text-white text-center bg-blue-500 hover:bg-blue-600 rounded").attr("href", cardData.url).text("Click here for recipe");
-      let img = $("<img>").addClass("py-2 flex justify-center").attr("src", cardData.img);
-      let youtubeIframe = $("<iframe>").addClass("youtube-iframe").attr("allowfullscreen", "true");
-      card.append(title, img, url, youtubeIframe);
+      let url = $("<a>").addClass("text-xl text-white text-center bg-blue-500 hover:bg-blue-600 rounded lg:w-full").attr("href", cardData.url).text("Click here for recipe");
+      let img = $("<img>").addClass("py-2 w-80 h-80 m-auto flex justify-center").attr("src", cardData.img);
+      let youtubeIframe = $("<iframe>").addClass("youtube-iframe flex justify-center m-auto mb-4 lg:m-auto").attr("allowfullscreen", "true");
+      card.append(title, img, youtubeIframe, url);
       cardContainer.append(card);
-      fetchYouTubeVideo(cardData.title, youtubeIframe);
+      if(i < 3){
+
+        fetchYouTubeVideo(cardData.title, youtubeIframe);
+      }
     }
   }
   function fetchYouTubeVideo(title, iframeElement) {
-    let youtubeApiKey = 'AIzaSyAdjb0hNfabMkGTXFdduZ7GauyaSHDf-J4';
+    let youtubeApiKey = 'AIzaSyDQtVi_nUX7iWI_D47-g_1GMF2ptleFlcM';
     let query = encodeURIComponent(`${title} recipe`);
     let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${query}&type=video&key=${youtubeApiKey}`;
   
