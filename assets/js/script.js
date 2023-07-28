@@ -81,10 +81,10 @@ $(function () {
                         img: recipe.image,
                         url: recipe.url,
                     };
-                    let card = $("<div>").addClass("card");
-                    let title = $("<h3>").text(cardData.title);
-                    let url = $("<a>").attr("href", cardData.url).text("Click here for recipe");
-                    let img = $("<img>").attr("src", cardData.img);
+                    let card = $("<div>").addClass("flex flex-col card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg");
+                    let title = $("<h3>").addClass("text-blue-500 text-xl underline").text(cardData.title);
+                    let url = $("<a>").addClass("text-xl text-white text-center bg-blue-500 hover:bg-blue-600 rounded").attr("href", cardData.url).text("Click here for recipe");
+                    let img = $("<img>").addClass("py-2 flex justify-center").attr("src", cardData.img);
                     card.append(title, img, url);
                     cardContainer.append(card);
                 }
