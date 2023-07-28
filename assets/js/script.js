@@ -81,10 +81,13 @@ $(function () {
                         img: recipe.image,
                         url: recipe.url,
                     };
-                    let card = $("<div>").addClass("flex flex-col card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg");
-                    let title = $("<h3>").addClass("text-blue-500 text-xl underline").text(cardData.title);
+                    if (cardData.title.length > 40) {
+                        cardData.title = cardData.title.substring(0, 40) + "...";
+                    }
+                    let card = $("<div>").addClass("card w-84 h-100 flex flex-col p-2 m-2 border-4 border-blue-500 border-solid rounded-lg");
+                    let title = $("<h3>").addClass("max-w-64 text-blue-500 text-xl m-auto underline truncate").text(cardData.title);
                     let url = $("<a>").addClass("text-xl text-white text-center bg-blue-500 hover:bg-blue-600 rounded").attr("href", cardData.url).text("Click here for recipe");
-                    let img = $("<img>").addClass("py-2 flex justify-center").attr("src", cardData.img);
+                    let img = $("<img>").addClass("py-2 h-5rem w-5rem m-auto flex justify-center ").attr("src", cardData.img);
                     card.append(title, img, url);
                     cardContainer.append(card);
                 }
