@@ -1,11 +1,16 @@
 $(function () {
-  let ingredientSearchInput = $('#ingredientInput');
+  let ingredientSearchInput = $("#ingredientInput");
   let apiKey = "3c587e98147391cafa125f23b8ed7455";
-  let appId = "efaf20c3"
-
-  let previousIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
-  ingredientSearchInput.val(previousIngredients.join(', '));
-
+  let appId = "efaf20c3";
+  let clearIngredients = document.getElementById("clear-ingredients");
+  let spinner = document.getElementById("search-icon");
+  let seachButton = document.getElementById("submit-ingredients");
+  let previousIngredients =
+    JSON.parse(localStorage.getItem("ingredients")) || [];
+  let indgredientbounce = document.getElementById("add-ingredient");
+  ingredientSearchInput.val(previousIngredients.join(", "));
+  // clears the input field on page load
+  ingredientSearchInput.val("");
   function renderIngredientList() {
     let ingredientList = $("#current-ingredient-list");
     ingredientList.empty();
@@ -16,53 +21,91 @@ $(function () {
   }
 
   // This renders the ingredient list on page load (if anything is in there from the last use)
-  renderIngredientList();
+  if (previousIngredients.length > 0) {
+    renderIngredientList();
+    seachButton.classList.remove("hidden");
+  }
 
-  // Click event for the add ingredient button
+  // Click event and keydown enter event for adding ingredients to the list
   $("#add-ingredient").on("click", function (event) {
     event.preventDefault();
+    addAnimationBounce();
+    setTimeout(removeAnimationBounce, 1000);
     // This ensures that the ingredient gets added to the list as long as it's not already on the list.
     let ingredient = ingredientSearchInput.val().trim();
     if (ingredient && !previousIngredients.includes(ingredient)) {
       //It adds the ingredient to this list of previous ingredients and updates the previousIngredients variable in localStorage
       previousIngredients.push(ingredient);
-      localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
-      ingredientSearchInput.val(previousIngredients.join(', '));
+      localStorage.setItem("ingredients", JSON.stringify(previousIngredients));
+      ingredientSearchInput.val(previousIngredients.join(", "));
       //The input is cleared for the next entry, and the render function is called to add the new input to the rendered list
       ingredientSearchInput.val("");
       renderIngredientList();
+      seachButton.classList.remove("hidden");
     }
     //Find a way to do this without using an alert or get rid of it
     else {
-    //These are alerts if the input is blank or the ingredient is already on the list
-    if (!ingredient) {
-      my_modal_5.showModal();
-    };
-    if (previousIngredients.includes(ingredient)) {
-      my_modal_5.showModal();
-    }};
-    
-    
+      //These are alerts if the input is blank or the ingredient is already on the list
+      if (!ingredient) {
+        my_modal_5.showModal();
+      }
+      if (previousIngredients.includes(ingredient)) {
+        my_modal_5.showModal();
+      }
+    }
   });
 
   // create click event for ingredient search button
   $("#submit-ingredients").on("click", function (event) {
     event.preventDefault();
+    addAnimationSpin();
+    setTimeout(removeAnimationSpin, 2000);
     // call function to get recipe data
     getRecipes(previousIngredients);
   });
 
   $("#clear-ingredients").on("click", function (event) {
     event.preventDefault();
+    addAnimationClass();
+    setTimeout(removeAnimationClass, 1000);
     // Clear ingredient list
     previousIngredients = [];
-    localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
+    localStorage.setItem("ingredients", JSON.stringify(previousIngredients));
+    seachButton.classList.add("hidden");
     renderIngredientList();
   });
-
-  // create function to get the data from the Edamam API
+  // function to add spin animation to clear icon
+  function addAnimationClass() {
+    clearIngredients.classList.add("animate-spin");
+  }
+  // function to remove spin animation from clear icon
+  function removeAnimationClass() {
+    clearIngredients.classList.remove("animate-spin");
+  }
+  // function to add spin animation to search icon
+  function addAnimationSpin() {
+    spinner.classList.add("loading", "loading-spinner");
+  }
+  // function to remove spin animation from search icon
+  function removeAnimationSpin() {
+    spinner.classList.remove("loading", "loading-spinner");
+  }
+  // function to add bounce animation to add ingredient button
+  function addAnimationBounce() {
+    indgredientbounce.classList.add("animate-bounce");
+  }
+  // function to remove bounce animation from add ingredient button
+  function removeAnimationBounce() {
+    indgredientbounce.classList.remove("animate-bounce");
+  }
   function getRecipes(ingredients) {
-    let queryURL = "https://api.edamam.com/search?q=" + encodeURIComponent(ingredients.join(',')) + "&app_id=" + appId + "&app_key=" + apiKey;
+    let queryURL =
+      "https://api.edamam.com/search?q=" +
+      encodeURIComponent(ingredients.join(",")) +
+      "&app_id=" +
+      appId +
+      "&app_key=" +
+      apiKey;
 
     $.ajax({
       url: queryURL,
@@ -71,80 +114,97 @@ $(function () {
       console.log(response);
       createCard(response.hits);
     });
-  }
 
-
-  function createCard(data) {
-    let cardContainer = $("#recipe-container");
-    cardContainer.empty();
-    for (let i = 0; i < data.length; i++) {
-      let recipe = data[i].recipe;
-      let cardData = {
-        title: recipe.label,
-        img: recipe.image,
-        url: recipe.url,
-      };
-      let card = $("<div>").addClass("flex flex-col w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap").attr('id', `card-${i}`);
-      let title = $("<h3>").addClass("text-blue-500 w-full text-xl text-center underline").text(cardData.title.length  > 32 ? cardData.title.substring(0,32)  + '...'  : cardData.title);
-      title.attr("data-title", recipe.label);
-      let url = $("<a>").addClass("text-xl text-white text-center bg-blue-500 hover:bg-blue-600 rounded lg:w-full").attr("href", cardData.url).text("Click here for recipe");
-      let img = $("<img>").addClass("py-2 w-80 h-80 m-auto flex justify-center").attr("src", cardData.img);
-      let youtubeIframe = $("<iframe>").addClass("youtube-iframe flex justify-center m-auto mb-4 lg:m-auto").attr("allowfullscreen", "true");
-      card.append(title, img, youtubeIframe, url);
-      cardContainer.append(card);
-      if(i < 3){
-
-        fetchYouTubeVideo(cardData.title, youtubeIframe);
+    function createCard(data) {
+      let cardContainer = $("#recipe-container");
+      cardContainer.empty();
+      for (let i = 0; i < data.length; i++) {
+        let recipe = data[i].recipe;
+        let cardData = {
+          title: recipe.label,
+          img: recipe.image,
+          url: recipe.url,
+        };
+        let card = $("<div>")
+          .addClass(
+            "flex flex-col shadow-xl w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap"
+          )
+          .attr("id", `card-${i}`);
+        let title = $("<h3>")
+          .addClass("text-blue-500 w-full text-xl text-center underline")
+          .text(
+            cardData.title.length > 32
+              ? cardData.title.substring(0, 32) + "..."
+              : cardData.title
+          );
+        title.attr("data-title", recipe.label);
+        let url = $("<a>")
+          .addClass(
+            "text-xl text-white text-center bg-blue-500 hover:animate-pulse rounded lg:w-full"
+          )
+          .attr({ href: cardData.url, target: "_blank" })
+          .text("Click here for recipe");
+        let img = $("<img>")
+          .addClass("py-2 w-80 h-80 m-auto flex justify-center")
+          .attr("src", cardData.img);
+        let youtubeIframe = $("<iframe>")
+          .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
+          .attr("allowfullscreen", "true");
+        card.append(title, img, youtubeIframe, url);
+        cardContainer.append(card);
+        if (i < 3) {
+          fetchYouTubeVideo(cardData.title, youtubeIframe);
+        }
       }
     }
+    function fetchYouTubeVideo(title, iframeElement) {
+      let youtubeApiKey = "AIzaSyDQtVi_nUX7iWI_D47-g_1GMF2ptleFlcM";
+      let query = encodeURIComponent(`${title} recipe`);
+      let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${query}&type=video&key=${youtubeApiKey}`;
+
+      $.ajax({
+        url: url,
+        method: "GET",
+      }).then(function (response) {
+        if (response.items.length > 0) {
+          let videoId = response.items[0].id.videoId;
+          let youtubeURL = `https://www.youtube.com/embed/${videoId}`;
+          // Set the iframe's src attribute to the YouTube video URL.
+          iframeElement.attr("src", youtubeURL);
+        } else {
+          console.log("No YouTube video found for the given title.");
+        }
+      });
+    }
   }
-  function fetchYouTubeVideo(title, iframeElement) {
-    let youtubeApiKey = 'AIzaSyDQtVi_nUX7iWI_D47-g_1GMF2ptleFlcM';
-    let query = encodeURIComponent(`${title} recipe`);
-    let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${query}&type=video&key=${youtubeApiKey}`;
-  
-    $.ajax({
-      url: url,
-      method: "GET",
-    }).then(function (response) {
-      if (response.items.length > 0) {
-        let videoId = response.items[0].id.videoId;
-        let youtubeURL = `https://www.youtube.com/embed/${videoId}`;
-        // Set the iframe's src attribute to the YouTube video URL.
-        iframeElement.attr("src", youtubeURL);
-      } else {
-        console.log("No YouTube video found for the given title.");
-      }
-    });
-  };
 });
 
-        //This code loads the IFrame Player API code asynchronously.
-        //var tag = document.createElement('script');
+//This code loads the IFrame Player API code asynchronously.
+//var tag = document.createElement('script');
 
-        //tag.src = "https://www.youtube.com/iframe_api";
-        //var firstScriptTag = document.getElementsByTagName('script')[0];
-        //firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+//tag.src = "https://www.youtube.com/iframe_api";
+//var firstScriptTag = document.getElementsByTagName('script')[0];
+//firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // 3. This function creates an <iframe> (and YouTube player)
-        //    after the API code downloads.
-        //var player;
-        //function onYouTubeIframeAPIReady() {
-          //player = new YT.Player('player', {
-            //height: '390',
-            //width: '640',
-            //videoId: 'M7lc1UVf-VE',
-            //playerVars: {
-              //'playsinline': 1
-            //},
-            //events: {
-              //'onReady': onPlayerReady,
-              //'onStateChange': onPlayerStateChange
-            //}
-          //});
-        //}
+// 3. This function creates an <iframe> (and YouTube player)
+//    after the API code downloads.
+//var player;
+//function onYouTubeIframeAPIReady() {
+//player = new YT.Player('player', {
+//height: '390',
+//width: '640',
+//videoId: 'M7lc1UVf-VE',
+//playerVars: {
+//'playsinline': 1
+//},
+//events: {
+//'onReady': onPlayerReady,
+//'onStateChange': onPlayerStateChange
+//}
+//});
+//}
 
-        // 4. The API will call this function when the video player is ready.
-        //function onPlayerReady(event) {
-          //event.target.playVideo();
-        //}
+// 4. The API will call this function when the video player is ready.
+//function onPlayerReady(event) {
+//event.target.playVideo();
+//}

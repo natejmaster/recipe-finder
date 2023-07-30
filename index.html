@@ -1,50 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recipe Finder</title>
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@3.5.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-</head>
-<body>
-    <header class = "bg-blue-500 py-4">
-        <h1 class = "text-white text-center text-5xl font-bold">Recipe Finder</h1>
+  </head>
+  <body>
+    <header class="bg-blue-500 py-4">
+      <h1 class="text-white text-center text-5xl font-bold">Recipe Finder</h1>
     </header>
-    <nav>
-
-    </nav>
+    <nav></nav>
     <main>
-        <div class = "flex flex-col justify-center m-4 lg:flex-row" id="user-input-card">
-            <h2 class = "text-lg text-blue-500 text-center lg: py-4">Enter your ingredients in the input below:</h2>
-            <input class = "text-blue-500 text-center h-12 text-lg px-2 py-2 m-2 rounded-lg border border-blue-500 focus:outline-none focus:border-blue-900 lg:w-1/6"classtype="text" id="ingredientInput" placeholder="Enter ingredient">
-            <button class = "bg-blue-500 h-12 hover:bg-blue-600 text-white font-semibold m-2 py-2 px-4 rounded" id="add-ingredient">Add Ingredient</button>
-            <button class = "bg-blue-500 h-12 hover:bg-blue-600 text-white font-semibold m-2 py-2 px-4 rounded" id = "submit-ingredients">Search Recipe</button>
-            <div class = "flex flex-col text-center my-2 p-2 rounded-lg border-4 border-blue-500  id="current ingredients">
-                <p class = "text-2xl text-blue-500 underline">Current Ingredients:</p>
-                <ul class = "text-blue-500 text-xl" id ="current-ingredient-list"></ul>
-                <button class ="bg-blue-500 hover:bg-blue-600 text-white font-semibold m-2 py-2 px-4 rounded" id="clear-ingredients">Clear Ingredients</button>
-            </div>
-        </div>
-        <div class = "flex flex-row flex-wrap" id="recipe-container"></div>
-        <div id="player"></div>
-        <!-- You can open the modal using ID.showModal() method -->
+      <div
+        class="flex flex-col justify-center m-4 lg:flex-row md:flex-row md:flex-wrap lg:justify-around"
+        id="user-input-card"
+      >
+        <h2
+          class="text-lg text-blue-500 font-semibold text-center md:w-1/2 lg:w-1/5"
+        >
+          Enter your ingredients into the following input then click add
+          ingredient:
+        </h2>
+        <input
+          class="text-blue-500 shadow-xl text-center h-12 text-lg px-2 py-2 m-2 rounded-lg border border-blue-500 focus:outline-none focus:animate-pulse lg:w-1/6 md:w-2/5"
+          classtype="text"
+          id="ingredientInput"
+          placeholder="Enter ingredient"
+        />
 
-<!-- Open the modal using ID.showModal() method -->
-<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-  <form method="dialog" class="modal-box">
-    <h3 class="font-bold text-lg">Please type an indgrediant not already on the list!</h3>
-    <p class="py-4">Press ESC key or click the button below to close</p>
-    <div class="modal-action">
-      <!-- if there is a button in form, it will close the modal -->
-      <button class="btn">Close</button>
-    </div>
-  </form>
-</dialog>
+        <button
+          class="tooltip tooltip-bottom shadow-xl hover:opacity-50 bg-blue-500 h-12 text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
+          data-tip="Click to add ingredient to search list"
+          id="add-ingredient"
+        >
+          Add Ingredient
+        </button>
+
+        <button
+          class="tooltip tooltip-bottom showdow-xl bg-blue-600 hidden h-12 animate-pulse text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
+          data-tip="Click to search for recipes"
+          id="submit-ingredients"
+        >
+          Search Recipe
+          <span id="search-icon"></span>
+        </button>
+        <div
+          class="tooltip tooltip-bottom shadow-xl flex flex-row text-center my-2 p-2 rounded-lg justify-around border-4 border-blue-500 ml-2 md:w-full lg:w-auto lg:flex-col"
+          data-tip="Current ingredients that will be in your search"
+          id="current ingredients"
+        >
+          <p class="text-2xl text-blue-500 underline">Current Ingredients:</p>
+          <ul class="text-blue-500 text-xl" id="current-ingredient-list"></ul>
+          <button
+            class="bg-blue-500 shadow-xl hover:opacity-50 text-white font-semibold m-2 py-2 px-4 rounded-full"
+            id="clear-ingredients"
+          >
+            Clear Ingredients
+          </button>
+        </div>
+      </div>
+      <div class="flex flex-row flex-wrap" id="recipe-container"></div>
+      <div id="player"></div>
+
+      <!-- You can open the modal using ID.showModal() method -->
+
+      <!-- Open the modal using ID.showModal() method -->
+      <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+        <form method="dialog" class="modal-box">
+          <h3 class="font-bold text-blue-500 text-lg">
+            Please type an indgrediant not already on the list!
+          </h3>
+          <p class="py-4 text-blue-500 font-semibold">
+            Press ESC key or click the button below to close
+          </p>
+          <div class="modal-action">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn bg-blue-500 text-white hover:animate-pulse">
+              Close
+            </button>
+          </div>
+        </form>
+      </dialog>
     </main>
     <script src="assets/js/script.js"></script>
-</body>
+  </body>
 </html>
