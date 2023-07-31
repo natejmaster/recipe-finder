@@ -11,9 +11,19 @@ $(function () {
   ingredientSearchInput.val(previousIngredients.join(", "));
   // clears the input field on page load
   ingredientSearchInput.val("");
+
+  function adjustLayout() {
+    const hasAutocompleteSuggestions = $('.ui-autocomplete').is(':visible');
+    if (hasAutocompleteSuggestions) {
+      $('#user-input-card').addClass("has-suggestions");
+    } else {
+      $('#user-input-card').removeClass("has-suggestions");
+    }
+  }
   // Add event handler for when the input field loses focus
   ingredientSearchInput.on("blur", function () {
     $(".ui-helper-hidden-accessible").hide();
+    adjustLayout();
   });
 
   ingredientSearchInput.autocomplete({
@@ -32,6 +42,12 @@ $(function () {
       });
     },
     minLength: 2,
+    open: function () {
+      adjustLayout();
+    },
+    close: function () {
+      adjustLayout();
+    }
   });
   function renderIngredientList() {
     let ingredientList = $("#current-ingredient-list");
@@ -69,9 +85,11 @@ $(function () {
     else {
       //These are alerts if the input is blank or the ingredient is already on the list
       if (!ingredient) {
+        $("#my_modal_5 h3").text("Please enter a valid ingredient!");
         my_modal_5.showModal();
       }
       if (previousIngredients.includes(ingredient)) {
+        $("#my_modal_5 h3").text("Please type an ingredient not already on the list!");
         my_modal_5.showModal();
       }
     }
