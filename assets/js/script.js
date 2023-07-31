@@ -53,11 +53,23 @@ $(function () {
     let ingredientList = $("#current-ingredient-list");
     ingredientList.empty();
     for (let i = 0; i < previousIngredients.length; i++) {
-      let listItem = $("<li>").text(previousIngredients[i]);
+
+      let listItem = $("<li>").addClass("ingredient-item");
+      let ingredientText = $("<span>").text(previousIngredients[i]);
+      let removeIcon = $("<span>").text("  [X]").addClass("remove-icon");
+      removeIcon.on('click', function () {
+        removeIngredient(i);
+      });
+      listItem.append(ingredientText, removeIcon);
       ingredientList.append(listItem);
     }
   }
 
+  function removeIngredient(index) {
+    previousIngredients.splice(index, 1);
+    localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
+    renderIngredientList();
+  }
   // This renders the ingredient list on page load (if anything is in there from the last use)
   if (previousIngredients.length > 0) {
     renderIngredientList();
@@ -152,7 +164,14 @@ $(function () {
       method: "GET",
     }).then(function (response) {
       console.log(response);
-      createCard(response.hits);
+      if (response.hits.length === 0) {
+        // Display the error modal with an appropriate message
+        $("#my_modal_5 h3").text("No recipes found with the provided ingredients! Please remove at least one ingredient from the list and try again!");
+        my_modal_5.showModal();
+      } else {
+        // Call the function to create recipe cards
+        createCard(response.hits);
+      }
     });
 
     function createCard(data) {
