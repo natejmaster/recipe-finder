@@ -1,14 +1,17 @@
-  @media (max-width: 640px) {
+  /* Styling for medium/tablet screen widths */
+@media (max-width: 1024px) {
+    /* #user-input-card styles */
     #user-input-card {
       flex-direction: column;
       align-items: center;
       position: relative;
     }
   
+    /* .tooltip styles */
     .tooltip {
       margin-top: 10px;
     }
-
+  
     /* Move the "Add Ingredient" button below the autocomplete suggestions */
     .has-suggestions #add-ingredient {
       margin-top: 230px; /* Adjust this value as needed to move it down */
