@@ -11,6 +11,28 @@ $(function () {
   ingredientSearchInput.val(previousIngredients.join(", "));
   // clears the input field on page load
   ingredientSearchInput.val("");
+  // Add event handler for when the input field loses focus
+  ingredientSearchInput.on("blur", function () {
+    $(".ui-helper-hidden-accessible").hide();
+  });
+
+  ingredientSearchInput.autocomplete({
+    source: function (request, response) {
+      $.ajax({
+        url: `https://api.spoonacular.com/food/ingredients/autocomplete?apiKey=4e4647d84528456f9b104d9f1dd55158&query=${request.term}`,
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+          const matches = data.map((item) => item.name);
+          response(matches);
+        },
+        error: function (error) {
+          console.error("Error fetching ingredient suggestions:", error);
+        },
+      });
+    },
+    minLength: 2,
+  });
   function renderIngredientList() {
     let ingredientList = $("#current-ingredient-list");
     ingredientList.empty();
@@ -178,33 +200,3 @@ $(function () {
     }
   }
 });
-
-//This code loads the IFrame Player API code asynchronously.
-//var tag = document.createElement('script');
-
-//tag.src = "https://www.youtube.com/iframe_api";
-//var firstScriptTag = document.getElementsByTagName('script')[0];
-//firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-// 3. This function creates an <iframe> (and YouTube player)
-//    after the API code downloads.
-//var player;
-//function onYouTubeIframeAPIReady() {
-//player = new YT.Player('player', {
-//height: '390',
-//width: '640',
-//videoId: 'M7lc1UVf-VE',
-//playerVars: {
-//'playsinline': 1
-//},
-//events: {
-//'onReady': onPlayerReady,
-//'onStateChange': onPlayerStateChange
-//}
-//});
-//}
-
-// 4. The API will call this function when the video player is ready.
-//function onPlayerReady(event) {
-//event.target.playVideo();
-//}
