@@ -1,0 +1,22 @@
+  @media (max-width: 640px) {
+    #user-input-card {
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+  
+    .tooltip {
+      margin-top: 10px;
+    }
+
+    /* Move the "Add Ingredient" button below the autocomplete suggestions */
+    .has-suggestions #add-ingredient {
+      margin-top: 230px; /* Adjust this value as needed to move it down */
+    }
+  
+    /* Set a fixed position for the autocomplete list */
+    .ui-autocomplete {
+      position: fixed;
+      z-index: 9999;
+    }
+  }
