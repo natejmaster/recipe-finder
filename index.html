@@ -19,11 +19,14 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   </head>
   <body>
+
+    <!--title-->
     <header class="bg-blue-500 py-4">
       <h1 class="text-white text-center text-5xl font-bold font-mono">Fridge Raider</h1>
     </header>
     <nav></nav>
     <main>
+      <!--user input card representing representing the search bar and surrounding buttons-->
       <div
         class="flex flex-col justify-center m-4 md:flex-row md:flex-wrap lg:flex-row font-serif lg:justify-around"
         id="user-input-card"
@@ -34,6 +37,7 @@
           Enter your ingredients into the following input then click add
           ingredient:
         </h2>
+        <!--search bar where you can enter your ingredients-->
         <input
           class="text-blue-500 shadow-lg shadow-blue-500/50 text-center h-12 text-lg px-2 py-2 m-2 rounded-lg border border-blue-500 focus:outline-none focus:animate-pulse lg:w-1/6 lg:my-5 md:w-2/5"
           type="text"
@@ -41,7 +45,7 @@
           placeholder="Enter ingredient"
           autocomplete="off"
         />
-        
+        <!--add ingredient button-->
         <button
           class="tooltip tooltip-bottom shadow-xl shadow-blue-500/50 my-5 hover:opacity-50 w-full bg-blue-500 h-12 text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
           data-tip="Click to add ingredient to search list"
@@ -49,7 +53,7 @@
         >
           Add Ingredient
         </button>
-
+        <!--button to submit ingredients-->
         <button
           class="tooltip tooltip-bottom showdow-xl shadow-blue-500/50 my-5 bg-blue-600 hidden w-full h-12 animate-pulse text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
           data-tip="Click to search for recipes"
@@ -57,6 +61,7 @@
         >
           Search Recipe
           <span id="search-icon"></span>
+          <!--this is the box that stores the current ingredients using localstorage-->
         </button>
         <div
           class="tooltip tooltip-bottom shadow-xl shadow-blue-500/50 flex flex-row text-center my-2 p-2 rounded-lg justify-around border-4 border-blue-500 ml-2 md:w-2/5 md:flex-col lg:w-auto lg:flex-col"
@@ -65,6 +70,7 @@
         >
           <p class="text-2xl text-blue-500 underline">Current Ingredients:</p>
           <ul class="text-blue-500 text-xl" id="current-ingredient-list"></ul>
+          <!--this button clears the local storage of the ingredients that were stored in it-->
           <button
             class="bg-blue-500 shadow-xl hover:opacity-50 text-white font-semibold m-2 py-2 px-4 rounded-full"
             id="clear-ingredients"
