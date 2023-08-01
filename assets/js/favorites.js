@@ -24,7 +24,7 @@ $(function() {
         .addClass("py-2 w-80 h-80 m-auto flex justify-center")
         .attr("src", cardData.img);
       let removeBtn = $("<button>")
-      .addClass("text-xl text-white text-center bg-blue-500 hover:animate-pulse rounded lg:w-full")
+      .addClass("text-xl text-white text-center bg-blue-500 mt-2 hover:animate-pulse rounded lg:w-full")
       .on("click", function() {
         favorites.splice(i, 1);
         localStorage.setItem("favorites", JSON.stringify(favorites));

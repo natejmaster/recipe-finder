@@ -209,7 +209,7 @@ $(function () {
           .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
           .attr("allowfullscreen", "true");
           let favBtn = $("<button>")
-          .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4  rounded-full")
+          .addClass("text-xl text-white text-center bg-blue-500 hover:animate-pulse mt-2 rounded lg:w-full")
     .text("Save to Favorites")
          .on ('click', function() {
              saveToLocalStorage(cardData)
