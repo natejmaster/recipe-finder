@@ -12,11 +12,10 @@ $(function () {
   // clears the input field on page load
   ingredientSearchInput.val("");
   function saveToLocalStorage(recipeData) {
-    let favorites = JSON.parse(localStorage.getItem("favoriteRecipes")) || [];
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     favorites.push(recipeData);
-    localStorage.setItem("favorites", JSON.stringify(favoriteRecipes));
-  };
-
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }
   function adjustLayout() {
     const hasAutocompleteSuggestions = $('.ui-autocomplete').is(':visible');
     if (hasAutocompleteSuggestions) {
@@ -30,7 +29,6 @@ $(function () {
     $(".ui-helper-hidden-accessible").hide();
     adjustLayout();
   });
-
   ingredientSearchInput.autocomplete({
     source: function (request, response) {
       $.ajax({
@@ -58,7 +56,6 @@ $(function () {
     let ingredientList = $("#current-ingredient-list");
     ingredientList.empty();
     for (let i = 0; i < previousIngredients.length; i++) {
-
       let listItem = $("<li>").addClass("ingredient-item");
       let ingredientText = $("<span>").text(previousIngredients[i]);
       let removeIcon = $("<span>").text("  [X]").addClass("remove-icon");
@@ -69,7 +66,6 @@ $(function () {
       ingredientList.append(listItem);
     }
   }
-
   function removeIngredient(index) {
     previousIngredients.splice(index, 1);
     localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
@@ -80,7 +76,6 @@ $(function () {
     renderIngredientList();
     seachButton.classList.remove("hidden");
   }
-
   // Click event and keydown enter event for adding ingredients to the list
   $("#add-ingredient").on("click", function (event) {
     event.preventDefault();
@@ -111,7 +106,6 @@ $(function () {
       }
     }
   });
-
   // create click event for ingredient search button
   $("#submit-ingredients").on("click", function (event) {
     event.preventDefault();
@@ -120,7 +114,6 @@ $(function () {
     // call function to get recipe data
     getRecipes(previousIngredients);
   });
-
   $("#clear-ingredients").on("click", function (event) {
     event.preventDefault();
     addAnimationClass();
@@ -163,7 +156,6 @@ $(function () {
       appId +
       "&app_key=" +
       apiKey;
-
     $.ajax({
       url: queryURL,
       method: "GET",
@@ -178,7 +170,6 @@ $(function () {
         createCard(response.hits);
       }
     });
-
     function createCard(data) {
       let cardContainer = $("#recipe-container");
       cardContainer.empty();
@@ -201,24 +192,6 @@ $(function () {
               ? cardData.title.substring(0, 32) + "..."
               : cardData.title
           );
-
-          $('favBtn').on ('click', event => {
-            function saveToLocalStorage(recipeData) {
-             let favorites = JSON.parse(localStorage.getItem('favRecipe'))
-             let saveButton = $("<button>")
-    .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
-    .text("Save to Favorites")
-    .on("click", function () {
-      saveToLocalStorage(cardData);
-    });
-            }
-              
-            }
-)}
-
-          $('retrieveBtn').on ('click', event => {
-            localStorage.getItem('recipe')
-          })
         title.attr("data-title", recipe.label);
         let url = $("<a>")
           .addClass(
@@ -236,7 +209,7 @@ $(function () {
           .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
     .text("Save to Favorites")
          .on ('click', function() {
-             saveToLocalStorage(recipeData) 
+             saveToLocalStorage(recipeData)
          });
         card.append(title, img, youtubeIframe, url, favBtn);
         cardContainer.append(card);
@@ -249,7 +222,6 @@ $(function () {
       let youtubeApiKey = "AIzaSyDQtVi_nUX7iWI_D47-g_1GMF2ptleFlcM";
       let query = encodeURIComponent(`${title} recipe`);
       let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${query}&type=video&key=${youtubeApiKey}`;
-
       $.ajax({
         url: url,
         method: "GET",
@@ -265,9 +237,6 @@ $(function () {
       });
     }
     $('.addToFavBtn').on('click', event => {
-     
-    
     });
-    
   }
-);
+});
