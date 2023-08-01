@@ -56,7 +56,7 @@ $(function () {
 
       let listItem = $("<li>").addClass("ingredient-item");
       let ingredientText = $("<span>").text(previousIngredients[i]);
-      let removeIcon = $("<span>").text("  [X]").addClass("remove-icon");
+      let removeIcon = $("<span>").text("  [X]").addClass("remove-icon hover:text-red-500 hover:cursor-pointer");
       removeIcon.on('click', function () {
         removeIngredient(i);
       });
@@ -80,7 +80,7 @@ $(function () {
   $("#add-ingredient").on("click", function (event) {
     event.preventDefault();
     addAnimationBounce();
-    setTimeout(removeAnimationBounce, 1000);
+    setTimeout(removeAnimationBounce, 500);
     // This ensures that the ingredient gets added to the list as long as it's not already on the list.
     let ingredient = ingredientSearchInput.val().trim();
     if (ingredient && !previousIngredients.includes(ingredient)) {
@@ -186,7 +186,7 @@ $(function () {
         };
         let card = $("<div>")
           .addClass(
-            "flex flex-col shadow-xl w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap"
+            "flex flex-col shadow-xl shadow-blue-500/50 w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap"
           )
           .attr("id", `card-${i}`);
         let title = $("<h3>")

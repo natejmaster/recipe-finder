@@ -20,22 +20,22 @@
   </head>
   <body>
     <header class="bg-blue-500 py-4">
-      <h1 class="text-white text-center text-5xl font-bold">Fridge Raider</h1>
+      <h1 class="text-white text-center text-5xl font-bold font-mono">Fridge Raider</h1>
     </header>
     <nav></nav>
     <main>
       <div
-        class="flex flex-col justify-center m-4 lg:flex-row md:flex-row md:flex-wrap lg:justify-around"
+        class="flex flex-col justify-center m-4 md:flex-row md:flex-wrap lg:flex-row font-serif lg:justify-around"
         id="user-input-card"
       >
         <h2
-          class="text-lg text-blue-500 font-semibold text-center md:w-1/2 lg:w-1/5"
+          class="text-lg text-blue-500 font-semibold text-center md:w-full lg:w-1/5"
         >
           Enter your ingredients into the following input then click add
           ingredient:
         </h2>
         <input
-          class="text-blue-500 shadow-xl text-center h-12 text-lg px-2 py-2 m-2 rounded-lg border border-blue-500 focus:outline-none focus:animate-pulse lg:w-1/6 md:w-2/5"
+          class="text-blue-500 shadow-lg shadow-blue-500/50 text-center h-12 text-lg px-2 py-2 m-2 rounded-lg border border-blue-500 focus:outline-none focus:animate-pulse lg:w-1/6 lg:my-5 md:w-2/5"
           type="text"
           id="ingredientInput"
           placeholder="Enter ingredient"
@@ -43,7 +43,7 @@
         />
 
         <button
-          class="tooltip tooltip-bottom shadow-xl hover:opacity-50 bg-blue-500 h-12 text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
+          class="tooltip tooltip-bottom shadow-xl shadow-blue-500/50 my-5 hover:opacity-50 w-full bg-blue-500 h-12 text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
           data-tip="Click to add ingredient to search list"
           id="add-ingredient"
         >
@@ -51,7 +51,7 @@
         </button>
 
         <button
-          class="tooltip tooltip-bottom showdow-xl bg-blue-600 hidden h-12 animate-pulse text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
+          class="tooltip tooltip-bottom showdow-xl shadow-blue-500/50 my-5 bg-blue-600 hidden w-full h-12 animate-pulse text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
           data-tip="Click to search for recipes"
           id="submit-ingredients"
         >
@@ -59,7 +59,7 @@
           <span id="search-icon"></span>
         </button>
         <div
-          class="tooltip tooltip-bottom shadow-xl flex flex-row text-center my-2 p-2 rounded-lg justify-around border-4 border-blue-500 ml-2 md:w-full lg:w-auto lg:flex-col"
+          class="tooltip tooltip-bottom shadow-xl shadow-blue-500/50 flex flex-row text-center my-2 p-2 rounded-lg justify-around border-4 border-blue-500 ml-2 md:w-2/5 md:flex-col lg:w-auto lg:flex-col"
           data-tip="Current ingredients that will be in your search"
           id="current-ingredients"
         >
