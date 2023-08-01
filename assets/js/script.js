@@ -209,7 +209,7 @@ $(function () {
           .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
     .text("Save to Favorites")
          .on ('click', function() {
-             saveToLocalStorage(recipeData)
+             saveToLocalStorage(cardData)
          });
         card.append(title, img, youtubeIframe, url, favBtn);
         cardContainer.append(card);
