@@ -22,13 +22,7 @@ $(function() {
       let img = $("<img>")
         .addClass("py-2 w-80 h-80 m-auto flex justify-center")
         .attr("src", cardData.img);
-      let youtubeIframe = $("<iframe>")
-        .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
-        .attr("allowfullscreen", "true");
-      let favBtn = $("<button>")
-        .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
-        .text("Save to Favorites");
-      card.append(title, img, youtubeIframe, url, favBtn);
+      card.append(title, img, url);
       favoriteContainer.append(card);
     }
   }
