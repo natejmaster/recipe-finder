@@ -196,6 +196,24 @@ $(function () {
               ? cardData.title.substring(0, 32) + "..."
               : cardData.title
           );
+
+          $('favBtn').on ('click', event => {
+            function saveToLocalStorage(recipeData) {
+             let favorites = JSON.parse(localStorage.getItem('favRecipe'))
+             let saveButton = $("<button>")
+    .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
+    .text("Save to Favorites")
+    .on("click", function () {
+      saveToLocalStorage(cardData);
+    });
+            }
+              
+            }
+)}
+
+          $('retrieveBtn').on ('click', event => {
+            localStorage.getItem('recipe')
+          })
         title.attr("data-title", recipe.label);
         let url = $("<a>")
           .addClass(
@@ -209,6 +227,18 @@ $(function () {
         let youtubeIframe = $("<iframe>")
           .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
           .attr("allowfullscreen", "true");
+          let favBtn = $("<button>")
+          .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
+    .text("Save to Favorites")
+         .on ('click', function() {
+             saveToLocalStorage(recipeData) {
+             let favorites = JSON.parse(localStorage.getItem('favRecipe'))
+             let saveButton = $("<button>")
+    .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
+    .text("Save to Favorites")
+    .on("click", function () {
+      saveToLocalStorage(cardData);
+    });
         card.append(title, img, youtubeIframe, url);
         cardContainer.append(card);
         if (i < 3) {
@@ -235,5 +265,10 @@ $(function () {
         }
       });
     }
+    $('.addToFavBtn').on('click', event => {
+     
+    
+    });
+    
   }
-});
+);
