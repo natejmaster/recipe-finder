@@ -13,9 +13,14 @@ $(function () {
   ingredientSearchInput.val("");
   function saveToLocalStorage(recipeData) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    if (favorites.some(favorite => favorite.title === recipeData.title)) {
+      $('#my_modal_5 h3').text("This recipe is already in your favorites!");
+      my_modal_5.showModal();
+    } else {
     favorites.push(recipeData);
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }
+}
   function adjustLayout() {
     const hasAutocompleteSuggestions = $('.ui-autocomplete').is(':visible');
     if (hasAutocompleteSuggestions) {
@@ -92,9 +97,7 @@ $(function () {
       ingredientSearchInput.val("");
       renderIngredientList();
       seachButton.classList.remove("hidden");
-    }
-    //Find a way to do this without using an alert or get rid of it
-    else {
+    } else {
       //These are alerts if the input is blank or the ingredient is already on the list
       if (!ingredient) {
         $("#my_modal_5 h3").text("Please enter a valid ingredient!");
@@ -206,7 +209,7 @@ $(function () {
           .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
           .attr("allowfullscreen", "true");
           let favBtn = $("<button>")
-          .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
+          .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4  rounded-full")
     .text("Save to Favorites")
          .on ('click', function() {
              saveToLocalStorage(cardData)
