@@ -9,9 +9,32 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous"
   ></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 </head>
 <body>
+  <header class="bg-blue-500 py-4">
+    <h1 class="text-white text-center text-5xl font-bold font-mono">Fridge Raider</h1>
+    <a href="./index.html" class="text-white text-3xl font-bold font-mono">Home Page</a>
+  </header>
+  <main>
+  <div id="no-favorites-message" class="text-center text-2xl text-gray-500 font-bold py-4">
+    No favorite recipes yet. Go find some recipes on the home page!
+  </div>
     <div id="favorite-container" class="flex flex-row flex-wrap"></div>
+    </main>
+    <footer class="fixed bottom-0 w-full">
+      <div class="flex flex-col justify-center bg-blue-500 py-4 lg:flex-row justify-around">
+        <h4 class="text-white text-center text-2xl font-semibold">
+          Made by: <span class="text-blue-200">Team 3</span>
+        </h4>
+        <div class="flex flex-col justify-center underline items-center text-lg text-white lg:flex-row lg:justify-around lg:w-3/5">
+          <a class="hover:animate-pulse" href = "https://github.com/KDonnelly33" target="_blank">Kevin Donnelly</a>
+         
+          <a class="hover:animate-pulse" href="https://github.com/natejmaster" target="_blank">Nate Master</a>
+           
+          <a class="hover:animate-pulse" href="https://github.com/NotADullJack" target="_blank">Jack Ceretti</a>
+      </div>
+    </footer>
     <script src="assets/js/favorites.js"></script>
 </body>
 </html>

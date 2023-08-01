@@ -1,3 +1,4 @@
+
   /* Styling for medium/tablet screen widths */
 @media (max-width: 1024px) {
     /* #user-input-card styles */
@@ -21,5 +22,13 @@
     .ui-autocomplete {
       position: fixed;
       z-index: 9999;
+    }
+  }
+
+/* Styling for computer-width screens */
+@media (min-width: 1025px) {
+    /* Move the footer down when there are suggestions */
+    #user-input-card.has-suggestions footer {
+      margin-top: 100px; /* Adjust this value as needed to move it down */
     }
   }
