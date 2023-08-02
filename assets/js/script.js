@@ -1,7 +1,10 @@
+//Stores all JS within a jquery function so it won't load until the HTML is done loading
 $(function () {
+  //Declares global variables referenced more than once
   let ingredientSearchInput = $("#ingredientInput");
   let apiKey = "3c587e98147391cafa125f23b8ed7455";
   let appId = "efaf20c3";
+  //Declares specific elements acted upon by JS interactivity
   let clearIngredients = document.getElementById("clear-ingredients");
   let spinner = document.getElementById("search-icon");
   let seachButton = document.getElementById("submit-ingredients");
@@ -12,16 +15,20 @@ $(function () {
   ingredientSearchInput.val(previousIngredients.join(", "));
   // clears the input field on page load
   ingredientSearchInput.val("");
+  //Function that saves favorites to local storage for access on the favorites page
   function saveToLocalStorage(recipeData) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     if (favorites.some(favorite => favorite.title === recipeData.title)) {
+      //Modal warning if a user tries to save a recipe that's already been saved.
       $('#my_modal_5 h3').text("This recipe is already in your favorites!");
       my_modal_5.showModal();
     } else {
-    favorites.push(recipeData);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
+      //If the recipe is a new favorite, it is pushed to local storage in the favorites array
+      favorites.push(recipeData);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
   }
-}
+  //This function adjusts the mobile and tablet layouts to move the rest of the UI slightly down when the autocomplete suggestions are active
   function adjustLayout() {
     const hasAutocompleteSuggestions = $('.ui-autocomplete').is(':visible');
     if (hasAutocompleteSuggestions) {
@@ -30,11 +37,12 @@ $(function () {
       $('#user-input-card').removeClass("has-suggestions");
     }
   }
-  // Add event handler for when the input field loses focus
+  // This is an event handler that hides the autocomplete suggestions when the input is not actively clicked on
   ingredientSearchInput.on("blur", function () {
     $(".ui-helper-hidden-accessible").hide();
     adjustLayout();
   });
+  //This is the API request to Spoonacular that uses the live-input keystrokes and lists the 10 most similar terms
   ingredientSearchInput.autocomplete({
     source: function (request, response) {
       $.ajax({
@@ -50,6 +58,7 @@ $(function () {
         },
       });
     },
+    //Activates the layout adjustment function and the autocomplete function when at least two characters are added to the input
     minLength: 2,
     open: function () {
       adjustLayout();
@@ -58,20 +67,25 @@ $(function () {
       adjustLayout();
     }
   });
+  //This function takes the ingredients stored in localStorage and renders them to the UI in the current ingredients div
   function renderIngredientList() {
     let ingredientList = $("#current-ingredient-list");
     ingredientList.empty();
+    //Each ingredient is rendered with a box that can remove the item from the list individually
     for (let i = 0; i < previousIngredients.length; i++) {
       let listItem = $("<li>").addClass("ingredient-item");
       let ingredientText = $("<span>").text(previousIngredients[i]);
       let removeIcon = $("<span>").text("  [X]").addClass("remove-icon hover:text-red-500 hover:cursor-pointer");
+      //Event listener to remove individual ingredients
       removeIcon.on('click', function () {
         removeIngredient(i);
       });
+      //Appends text and remove icons to the list item, appends the list item to the ingredient list
       listItem.append(ingredientText, removeIcon);
       ingredientList.append(listItem);
     }
   }
+  //This function removes a single ingredient from the list without clearing the entire list
   function removeIngredient(index) {
     previousIngredients.splice(index, 1);
     localStorage.setItem('ingredients', JSON.stringify(previousIngredients));
@@ -110,7 +124,7 @@ $(function () {
       }
     }
   });
-  // create click event for ingredient search button
+  // This is the click event for the ingredient search button
   $("#submit-ingredients").on("click", function (event) {
     event.preventDefault();
     addAnimationSpin();
@@ -120,6 +134,7 @@ $(function () {
     // call function to get recipe data
     getRecipes(previousIngredients);
   });
+  //This is the click event for the clear ingredients button
   $("#clear-ingredients").on("click", function (event) {
     event.preventDefault();
     addAnimationClass();
@@ -130,7 +145,7 @@ $(function () {
     seachButton.classList.add("hidden");
     renderIngredientList();
   });
-  // click event for clear recipe button
+  // This is the click event for the clear recipes button
   $("#clear-recipes").on("click", function (event) {
     event.preventDefault();
     addAnimationClassRecipe();
@@ -139,7 +154,7 @@ $(function () {
     setTimeout(function () {
       clearRecipes.classList.add("hidden");
     }, 1000);
-    // clear recipe container
+    // This clears the recipe container
     $("#recipe-container").empty();
   });
   // function to add spin animation to clear icon
@@ -154,7 +169,7 @@ $(function () {
   function addAnimationClassRecipe() {
     clearRecipes.classList.add("animate-spin");
   }
-  // // // function to remove spin from clear recipe button
+  // function to remove spin from clear recipe button
   function removeAnimationClassRecipe() {
     clearRecipes.classList.remove("animate-spin");
   }
@@ -174,7 +189,9 @@ $(function () {
   function removeAnimationBounce() {
     indgredientbounce.classList.remove("animate-bounce");
   }
+  //This function calls the recipes from the Edmam API based on current ingredients
   function getRecipes(ingredients) {
+    //This variable designs the query specifics for the UI call with the API key and the ingredients
     let queryURL =
       "https://api.edamam.com/search?q=" +
       encodeURIComponent(ingredients.join(",")) +
@@ -196,9 +213,11 @@ $(function () {
         createCard(response.hits);
       }
     });
+    //This function creates the recipe cards for each result from the Edmam API call
     function createCard(data) {
       let cardContainer = $("#recipe-container");
       cardContainer.empty();
+      //For loop creates a card and individual elements for each data object from the Edmam API fetch call
       for (let i = 0; i < data.length; i++) {
         let recipe = data[i].recipe;
         let cardData = {
@@ -206,6 +225,7 @@ $(function () {
           img: recipe.image,
           url: recipe.url,
         };
+        //Individual elements (the card, the title, the link to the recipe, the image, the save button, and the container iframe for the youtube video are created for each recipe)
         let card = $("<div>")
           .addClass(
             "flex flex-col shadow-xl shadow-blue-500/50 w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap"
@@ -227,19 +247,21 @@ $(function () {
         let youtubeIframe = $("<iframe>")
           .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
           .attr("allowfullscreen", "true");
-          let favBtn = $("<button>")
+        let favBtn = $("<button>")
           .addClass("text-xl text-white text-center bg-blue-500 hover:animate-pulse mt-2 rounded lg:w-full")
-    .text("Save to Favorites")
-         .on ('click', function() {
-             saveToLocalStorage(cardData)
-         });
+          .text("Save to Favorites")
+          //This is a click event for the Save to Favorites button
+          .on('click', function () {
+            saveToLocalStorage(cardData)
+          });
+        //Appends the data to each card, appends each card to the card container
         card.append(title, img, youtubeIframe, url, favBtn);
         cardContainer.append(card);
-        if (i < 3) {
+          //Runs the fetchYouTubeVideo function to push relevant Youtube videos into the iframe
           fetchYouTubeVideo(cardData.title, youtubeIframe);
-        }
       }
     }
+    //This function calls YouTube's API and populates the rendered iFrames with the most popular youtube clip relevant to that dish
     function fetchYouTubeVideo(title, iframeElement) {
       let youtubeApiKey = "AIzaSyDdMfo6k-etcL7oi7YvD2TwsblpuX4nZMU";
       let query = encodeURIComponent(`${title} recipe`);
@@ -258,7 +280,5 @@ $(function () {
         }
       });
     }
-    $('.addToFavBtn').on('click', event => {
-    });
   }
 });
