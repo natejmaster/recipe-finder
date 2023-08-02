@@ -10,7 +10,7 @@ $(function() {
     for (let i = 0; i < favorites.length; i++) {
       let cardData = favorites[i];
       let card = $("<div>")
-        .addClass("flex flex-col shadow-xl w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap")
+        .addClass("flex flex-col shadow-xl card w-full p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap lg:justify-center lg:w-2/5 lg:mx-auto lg:items-center")
         .attr("id", `fav-card-${i}`);
       let title = $("<h3>")
         .addClass("text-blue-500 w-full text-xl text-center underline")
