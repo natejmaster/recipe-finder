@@ -5,6 +5,7 @@ $(function () {
   let clearIngredients = document.getElementById("clear-ingredients");
   let spinner = document.getElementById("search-icon");
   let seachButton = document.getElementById("submit-ingredients");
+  let clearRecipes = document.getElementById("clear-recipes");
   let previousIngredients =
     JSON.parse(localStorage.getItem("ingredients")) || [];
   let indgredientbounce = document.getElementById("add-ingredient");
@@ -13,9 +14,14 @@ $(function () {
   ingredientSearchInput.val("");
   function saveToLocalStorage(recipeData) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    if (favorites.some(favorite => favorite.title === recipeData.title)) {
+      $('#my_modal_5 h3').text("This recipe is already in your favorites!");
+      my_modal_5.showModal();
+    } else {
     favorites.push(recipeData);
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }
+}
   function adjustLayout() {
     const hasAutocompleteSuggestions = $('.ui-autocomplete').is(':visible');
     if (hasAutocompleteSuggestions) {
@@ -92,9 +98,7 @@ $(function () {
       ingredientSearchInput.val("");
       renderIngredientList();
       seachButton.classList.remove("hidden");
-    }
-    //Find a way to do this without using an alert or get rid of it
-    else {
+    } else {
       //These are alerts if the input is blank or the ingredient is already on the list
       if (!ingredient) {
         $("#my_modal_5 h3").text("Please enter a valid ingredient!");
@@ -111,6 +115,8 @@ $(function () {
     event.preventDefault();
     addAnimationSpin();
     setTimeout(removeAnimationSpin, 2000);
+    // shows the recipe clear button
+    clearRecipes.classList.remove("hidden");
     // call function to get recipe data
     getRecipes(previousIngredients);
   });
@@ -124,6 +130,18 @@ $(function () {
     seachButton.classList.add("hidden");
     renderIngredientList();
   });
+  // click event for clear recipe button
+  $("#clear-recipes").on("click", function (event) {
+    event.preventDefault();
+    addAnimationClassRecipe();
+    setTimeout(removeAnimationClassRecipe, 1000);
+    // // hides the recipe clear button after 1 second
+    setTimeout(function () {
+      clearRecipes.classList.add("hidden");
+    }, 1000);
+    // clear recipe container
+    $("#recipe-container").empty();
+  });
   // function to add spin animation to clear icon
   function addAnimationClass() {
     clearIngredients.classList.add("animate-spin");
@@ -131,6 +149,14 @@ $(function () {
   // function to remove spin animation from clear icon
   function removeAnimationClass() {
     clearIngredients.classList.remove("animate-spin");
+  }
+  // function to add spin to clear recipe button
+  function addAnimationClassRecipe() {
+    clearRecipes.classList.add("animate-spin");
+  }
+  // // // function to remove spin from clear recipe button
+  function removeAnimationClassRecipe() {
+    clearRecipes.classList.remove("animate-spin");
   }
   // function to add spin animation to search icon
   function addAnimationSpin() {
@@ -187,11 +213,7 @@ $(function () {
           .attr("id", `card-${i}`);
         let title = $("<h3>")
           .addClass("text-blue-500 w-full text-xl text-center underline")
-          .text(
-            cardData.title.length > 32
-              ? cardData.title.substring(0, 32) + "..."
-              : cardData.title
-          );
+          .text(cardData.title);
         title.attr("data-title", recipe.label);
         let url = $("<a>")
           .addClass(
@@ -206,7 +228,7 @@ $(function () {
           .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
           .attr("allowfullscreen", "true");
           let favBtn = $("<button>")
-          .addClass("bg-blue-500 text-white font-semibold m-2 py-2 px-4 rounded-full")
+          .addClass("text-xl text-white text-center bg-blue-500 hover:animate-pulse mt-2 rounded lg:w-full")
     .text("Save to Favorites")
          .on ('click', function() {
              saveToLocalStorage(cardData)

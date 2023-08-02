@@ -18,17 +18,27 @@
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
   </head>
+<<<<<<< HEAD
   <body>
 
     <!--title-->
     <header class="bg-blue-500 py-4">
       <h1 class="text-white text-center text-5xl font-bold font-mono">Fridge Raider</h1>
+=======
+  <body class="min-h-screen flex flex-col">
+    <header class="bg-blue-500 flex flex-col md:flex-row md:justify-around">
+      <h1 class="text-white text-center mt-2 text-5xl font-bold font-mono">Fridge Raider</h1>
+   <nav class="flex flex-row justify-around">
+    
+      <a href="favorites.html" class="text-white text-2xl py-4 underline font-serif font-semibold hover:animate-pulse">Favorites</a>
+    
+   </nav>
+>>>>>>> main
     </header>
-    <nav></nav>
     <main>
       <!--user input card representing representing the search bar and surrounding buttons-->
       <div
-        class="flex flex-col justify-center m-4 md:flex-row md:flex-wrap lg:flex-row font-serif lg:justify-around"
+        class="flex flex-col flex-grow justify-center m-4 md:flex-row md:flex-wrap lg:flex-row font-serif lg:justify-around"
         id="user-input-card"
       >
         <h2
@@ -77,9 +87,16 @@
           >
             Clear Ingredients
           </button>
+          <button
+          class="bg-blue-500 shadow-xl hidden hover:opacity-50 text-white font-semibold m-2 py-2 px-4 rounded-full"
+          id="clear-recipes"
+        >
+          Clear Recipes
+        </button>
+
         </div>
       </div>
-      <div class="flex flex-row flex-wrap" id="recipe-container"></div>
+      <div class="flex flex-row mb-20 flex-wrap" id="recipe-container"></div>15
       <div id="player"></div>
 
       <!-- You can open the modal using ID.showModal() method -->
@@ -102,7 +119,7 @@
         </form>
       </dialog>
     </main>
-    <footer>
+    <footer class="mt-auto fixed bottom-0 w-full">
       <div class="flex flex-col justify-center bg-blue-500 py-4 lg:flex-row justify-around">
         <h4 class="text-white text-center text-2xl font-semibold">
           Made by: <span class="text-blue-200">Team 3</span>
@@ -112,7 +129,7 @@
          
           <a class="hover:animate-pulse" href="https://github.com/natejmaster" target="_blank">Nate Master</a>
            
-          <a class="hover:animate-pulse" href="https://github.com/NotADullJack" target="_blank">Jack Cereti</a>
+          <a class="hover:animate-pulse" href="https://github.com/NotADullJack" target="_blank">Jack Ceretti</a>
       </div>
     </footer>
     <script src="assets/js/script.js"></script>
