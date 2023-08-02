@@ -291,6 +291,71 @@ $("#clear-ingredients").on("click", function (event) {
         console.log("No YouTube video found for the given title.");
       }
     });
+    function createCard(data) {
+      let cardContainer = $("#recipe-container");
+      cardContainer.empty();
+      for (let i = 0; i < data.length; i++) {
+        let recipe = data[i].recipe;
+        let cardData = {
+          title: recipe.label,
+          img: recipe.image,
+          url: recipe.url,
+        };
+        let card = $("<div>")
+          .addClass(
+            "flex flex-col shadow-xl shadow-blue-500/50 w-full card p-2 m-2 border-4 border-blue-500 border-solid rounded-lg lg:flex-row lg:flex-wrap"
+          )
+          .attr("id", `card-${i}`);
+        let title = $("<h3>")
+          .addClass("text-blue-500 w-full text-xl text-center underline")
+          .text(cardData.title);
+        title.attr("data-title", recipe.label);
+        let url = $("<a>")
+          .addClass(
+            "text-xl text-white text-center bg-blue-500 hover:animate-pulse rounded lg:w-full"
+          )
+          .attr({ href: cardData.url, target: "_blank" })
+          .text("Click here for recipe");
+        let img = $("<img>")
+          .addClass("py-2 w-80 h-80 m-auto flex justify-center")
+          .attr("src", cardData.img);
+        let youtubeIframe = $("<iframe>")
+          .addClass("youtube-iframe flex justify-center mb-4 mx-auto")
+          .attr("allowfullscreen", "true");
+          let favBtn = $("<button>")
+          .addClass("text-xl text-white text-center bg-blue-500 hover:animate-pulse mt-2 rounded lg:w-full")
+    .text("Save to Favorites")
+         .on ('click', function() {
+             saveToLocalStorage(cardData)
+         });
+        card.append(title, img, youtubeIframe, url, favBtn);
+        cardContainer.append(card);
+        if (i < 3) {
+          fetchYouTubeVideo(cardData.title, youtubeIframe);
+        }
+      }
+    }
+    function fetchYouTubeVideo(title, iframeElement) {
+      let youtubeApiKey = "AIzaSyDdMfo6k-etcL7oi7YvD2TwsblpuX4nZMU";
+      let query = encodeURIComponent(`${title} recipe`);
+      let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${query}&type=video&key=${youtubeApiKey}`;
+      $.ajax({
+        url: url,
+        method: "GET",
+      }).then(function (response) {
+        if (response.items.length > 0) {
+          let videoId = response.items[0].id.videoId;
+          let youtubeURL = `https://www.youtube.com/embed/${videoId}`;
+          // Set the iframe's src attribute to the YouTube video URL.
+          iframeElement.attr("src", youtubeURL);
+        } else {
+          console.log("No YouTube video found for the given title.");
+        }
+      });
+    }
+    $('.addToFavBtn').on('click', event => {
+    });
+
   }
 }
 });
