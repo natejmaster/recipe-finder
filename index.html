@@ -60,6 +60,7 @@
           data-tip="Click to search for recipes"
           id="submit-ingredients"
         >
+
           Search Recipe
           <span id="search-icon"></span>
         </button>
@@ -67,13 +68,13 @@
           class="tooltip tooltip-bottom shadow-xl shadow-blue-500/50 flex flex-row text-center my-2 p-2 rounded-lg justify-around border-4 border-blue-500 ml-2 md:w-2/5 md:flex-col lg:w-auto lg:flex-col"
           data-tip="Current ingredients that will be in your search"
           id="current-ingredients"
-        >
+        > <!--these lines of code represent the ingredients list which uses local storage to save the previously used ingredients-->
           <p class="text-2xl text-blue-500 underline">Current Ingredients:</p>
           <ul class="text-blue-500 text-xl" id="current-ingredient-list"></ul>
           <button
             class="bg-blue-500 shadow-xl hover:opacity-50 text-white font-semibold m-2 py-2 px-4 rounded-full"
             id="clear-ingredients"
-          >
+          > <!--this button wipes out the local storage of anything labeled ingredients-->
             Clear Ingredients
           </button>
           <button
