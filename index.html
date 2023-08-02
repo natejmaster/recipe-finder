@@ -32,6 +32,7 @@
         class="flex flex-col flex-grow justify-center m-4 md:flex-row md:flex-wrap lg:flex-row font-serif lg:justify-around"
         id="user-input-card"
       >
+      <!--creates elements for the instructions on how to use the site-->
         <h2
           class="text-lg text-blue-500 font-semibold text-center md:w-full lg:w-1/5"
         >
@@ -45,7 +46,7 @@
           placeholder="Enter ingredient"
           autocomplete="off"
         />
-        
+        <!--creates a styled button for adding ingredients -->
         <button
           class="tooltip tooltip-bottom shadow-xl shadow-blue-500/50 my-5 hover:opacity-50 w-full bg-blue-500 h-12 text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
           data-tip="Click to add ingredient to search list"
@@ -53,12 +54,13 @@
         >
           Add Ingredient
         </button>
-
+        <!--creates a styled button that when clicked on displays recipes that use the same ingredients as on the ingredients list-->
         <button
           class="tooltip tooltip-bottom showdow-xl shadow-blue-500/50 my-5 bg-blue-600 hidden w-full h-12 animate-pulse text-white font-semibold m-2 py-2 px-4 rounded-full md:w-2/5 lg:w-auto"
           data-tip="Click to search for recipes"
           id="submit-ingredients"
         >
+
           Search Recipe
           <span id="search-icon"></span>
         </button>
@@ -66,13 +68,13 @@
           class="tooltip tooltip-bottom shadow-xl shadow-blue-500/50 flex flex-row text-center my-2 p-2 rounded-lg justify-around border-4 border-blue-500 ml-2 md:w-2/5 md:flex-col lg:w-auto lg:flex-col"
           data-tip="Current ingredients that will be in your search"
           id="current-ingredients"
-        >
+        > <!--these lines of code represent the ingredients list which uses local storage to save the previously used ingredients-->
           <p class="text-2xl text-blue-500 underline">Current Ingredients:</p>
           <ul class="text-blue-500 text-xl" id="current-ingredient-list"></ul>
           <button
             class="bg-blue-500 shadow-xl hover:opacity-50 text-white font-semibold m-2 py-2 px-4 rounded-full"
             id="clear-ingredients"
-          >
+          > <!--this button wipes out the local storage of anything labeled ingredients-->
             Clear Ingredients
           </button>
           <button
@@ -84,7 +86,7 @@
 
         </div>
       </div>
-      <div class="flex flex-row mb-20 flex-wrap" id="recipe-container"></div>15
+      <div class="flex flex-row mb-20 flex-wrap" id="recipe-container"></div>
       <div id="player"></div>
 
       <!-- You can open the modal using ID.showModal() method -->
@@ -114,7 +116,7 @@
         </h4>
         <div class="flex flex-col justify-center underline items-center text-lg text-white lg:flex-row lg:justify-around lg:w-3/5">
           <a class="hover:animate-pulse" href = "https://github.com/KDonnelly33" target="_blank">Kevin Donnelly</a>
-         
+         <!--these lines are in the header and tell it to display a link to everyones github page but replace the text of the url with everyones full name-->
           <a class="hover:animate-pulse" href="https://github.com/natejmaster" target="_blank">Nate Master</a>
            
           <a class="hover:animate-pulse" href="https://github.com/NotADullJack" target="_blank">Jack Ceretti</a>
