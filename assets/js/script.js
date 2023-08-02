@@ -241,7 +241,7 @@ $(function () {
       }
     }
     function fetchYouTubeVideo(title, iframeElement) {
-      let youtubeApiKey = "AIzaSyDQtVi_nUX7iWI_D47-g_1GMF2ptleFlcM";
+      let youtubeApiKey = "AIzaSyDdMfo6k-etcL7oi7YvD2TwsblpuX4nZMU";
       let query = encodeURIComponent(`${title} recipe`);
       let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${query}&type=video&key=${youtubeApiKey}`;
       $.ajax({
