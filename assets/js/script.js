@@ -5,6 +5,7 @@ $(function () {
   let clearIngredients = document.getElementById("clear-ingredients");
   let spinner = document.getElementById("search-icon");
   let seachButton = document.getElementById("submit-ingredients");
+  let clearRecipes = document.getElementById("clear-recipes");
   let previousIngredients =
     JSON.parse(localStorage.getItem("ingredients")) || [];
   let indgredientbounce = document.getElementById("add-ingredient");
@@ -114,6 +115,8 @@ $(function () {
     event.preventDefault();
     addAnimationSpin();
     setTimeout(removeAnimationSpin, 2000);
+    // shows the recipe clear button
+    clearRecipes.classList.remove("hidden");
     // call function to get recipe data
     getRecipes(previousIngredients);
   });
@@ -127,6 +130,18 @@ $(function () {
     seachButton.classList.add("hidden");
     renderIngredientList();
   });
+  // click event for clear recipe button
+  $("#clear-recipes").on("click", function (event) {
+    event.preventDefault();
+    addAnimationClassRecipe();
+    setTimeout(removeAnimationClassRecipe, 1000);
+    // // hides the recipe clear button after 1 second
+    setTimeout(function () {
+      clearRecipes.classList.add("hidden");
+    }, 1000);
+    // clear recipe container
+    $("#recipe-container").empty();
+  });
   // function to add spin animation to clear icon
   function addAnimationClass() {
     clearIngredients.classList.add("animate-spin");
@@ -134,6 +149,14 @@ $(function () {
   // function to remove spin animation from clear icon
   function removeAnimationClass() {
     clearIngredients.classList.remove("animate-spin");
+  }
+  // function to add spin to clear recipe button
+  function addAnimationClassRecipe() {
+    clearRecipes.classList.add("animate-spin");
+  }
+  // // // function to remove spin from clear recipe button
+  function removeAnimationClassRecipe() {
+    clearRecipes.classList.remove("animate-spin");
   }
   // function to add spin animation to search icon
   function addAnimationSpin() {
@@ -190,11 +213,7 @@ $(function () {
           .attr("id", `card-${i}`);
         let title = $("<h3>")
           .addClass("text-blue-500 w-full text-xl text-center underline")
-          .text(
-            cardData.title.length > 32
-              ? cardData.title.substring(0, 32) + "..."
-              : cardData.title
-          );
+          .text(cardData.title);
         title.attr("data-title", recipe.label);
         let url = $("<a>")
           .addClass(
