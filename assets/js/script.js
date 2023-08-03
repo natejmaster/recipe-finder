@@ -250,15 +250,28 @@ $(function () {
         let favBtn = $("<button>")
           .addClass("text-xl text-white text-center bg-blue-500 hover:animate-pulse mt-2 rounded lg:w-full")
           .text("Save to Favorites")
-          //This is a click event for the Save to Favorites button
-          .on('click', function () {
-            saveToLocalStorage(cardData)
-          });
+        // Move the favorites variable inside the createCard function
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        //Check if the recipe is already in favorites
+        if (favorites.some(favorite => favorite.title === cardData.title)) {
+          //If it already exist in favorites, change the button to a red button with alternate text
+          favBtn.text("Added to Favorites");
+          favBtn.removeClass("bg-blue-500");
+          favBtn.addClass("bg-red-500");
+        }
+        //This is a click event for the Save to Favorites button
+        favBtn.on('click', function () {
+          saveToLocalStorage(cardData)
+          //After clicking, the button and text color update immediately
+          favBtn.text("Added to Favorites");
+          favBtn.removeClass("bg-blue-500");
+          favBtn.addClass("bg-red-500");
+        });
         //Appends the data to each card, appends each card to the card container
         card.append(title, img, youtubeIframe, url, favBtn);
         cardContainer.append(card);
-          //Runs the fetchYouTubeVideo function to push relevant Youtube videos into the iframe
-          fetchYouTubeVideo(cardData.title, youtubeIframe);
+        //Runs the fetchYouTubeVideo function to push relevant Youtube videos into the iframe
+        fetchYouTubeVideo(cardData.title, youtubeIframe);
       }
     }
     //This function calls YouTube's API and populates the rendered iFrames with the most popular youtube clip relevant to that dish
